@@ -1,138 +1,81 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+	/* Font family */
+	--elpuas-preset-fontsize-h1: clamp(74px, calc(4.625rem + ((1vw - 7.68px) * 4.661)), 96px);
+    --elpuas-preset-fontsize-h2: clamp(42px, calc(2.625rem + ((1vw - 7.68px) * 6.7797)), 74px);
+    --elpuas-preset-fontsize-h3: clamp(36px, calc(2.25rem + ((1vw - 7.68px) * 1.2712)), 42px);
+    --elpuas-preset-fontsize-h4: clamp(24px, calc(1.5rem + ((1vw - 7.68px) * 2.5424)), 36px);
+    --elpuas-preset-fontsize-h5: 24px;
+    --elpuas-preset-fontsize-base: 18px;
+
+	/* Colors */
+    --elpuas-preset-color-primary: #D8FF00;
+    --elpuas-preset-color-secondary: #B6D600;
+    --elpuas-preset-color-tertiary: #5E6F00;
+    --elpuas-preset-color-white: #FFF;
+    --elpuas-preset-color-black: #333;
+
+	/* Base spacing unit */
+	--elpuas-preset-space-xxs: 4px;
+	--elpuas-preset-space-xs: 8px;
+	--elpuas-preset-space-sm: 12px;
+	--elpuas-preset-space-md: 16px;
+	--elpuas-preset-space-lg: 24px;
+	--elpuas-preset-space-xl: 32px;
+	--elpuas-preset-space-xxl: 48px;
+	--elpuas-preset-space-xxxl: 64px;
+
+	/* Responsive larger spacers using clamp */
+	--elpuas-preset-space-xxxl-large: clamp(80px, 10vw, 100px);  /* Minimum 80px, preferred 10vw, max 100px */
+	--elpuas-preset-space-xxxxl-large: clamp(100px, 12vw, 120px); /* Minimum 100px, preferred 12vw, max 120px */
+
+	/* Standard margins */
+	--elpuas-preset-margin-xs: var(--elpuas-preset-space-xs);
+	--elpuas-preset-margin-sm: var(--elpuas-preset-space-sm);
+	--elpuas-preset-margin-md: var(--elpuas-preset-space-md);
+	--elpuas-preset-margin-lg: var(--elpuas-preset-space-lg);
+	--elpuas-preset-margin-xl: var(--elpuas-preset-space-xl);
+	--elpuas-preset-margin-xxxl-large: var(--elpuas-preset-space-xxxl-large);
+	--elpuas-preset-margin-xxxxl-large: var(--elpuas-preset-space-xxxxl-large);
+
+	/* Standard paddings */
+	--elpuas-preset-padding-xs: var(--elpuas-preset-space-xs);
+	--elpuas-preset-padding-sm: var(--elpuas-preset-space-sm);
+	--elpuas-preset-padding-md: var(--elpuas-preset-space-md);
+	--elpuas-preset-padding-lg: var(--elpuas-preset-space-lg);
+	--elpuas-preset-padding-xl: var(--elpuas-preset-space-xl);
+	--elpuas-preset-padding-xxxl-large: var(--elpuas-preset-space-xxxl-large);
+	--elpuas-preset-padding-xxxxl-large: var(--elpuas-preset-space-xxxxl-large);
+
+	/* Box Shadow */
+	--elpuas-preset-box-shadow: 0 2px 6px rgba(var(--elpuas-preset-color-black), 25%), 0 8px 24px rgba(var(--elpuas-preset-color-black), 33%),
+		0 16px 32px rgba(var(--elpuas-preset-color-black), 33%);
 }
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-body {
-	font-family: 'Atkinson', sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
+
 table {
 	width: 100%;
 }
 img {
 	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
+	height: 100%;
+	object-fit: cover;
 }
 code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
+	padding: var(--elpuas-preset-padding-xxs) var(--elpuas-preset-padding-xs);
 	border-radius: 2px;
 }
 pre {
 	padding: 1.5em;
-	border-radius: 8px;
 }
 pre > code {
 	all: unset;
 }
 blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
+	padding: 0 0 0 var(--elpuas-preset-padding-lg);
 	margin: 0px;
-	font-size: 1.333em;
 }
+
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
 }
 
 .sr-only {
