@@ -49,6 +49,8 @@
 	/* Box Shadow */
 	--elpuas-preset-box-shadow: 0 2px 6px rgba(var(--elpuas-preset-color-black), 25%), 0 8px 24px rgba(var(--elpuas-preset-color-black), 33%),
 		0 16px 32px rgba(var(--elpuas-preset-color-black), 33%);
+
+	--elpuas-preset-content-width: 1240px;
 }
 
 body {
@@ -62,7 +64,7 @@ body {
 }
 
 main {
-	max-width: 1240px;
+	max-width: var(--elpuas-preset-content-width);
 	margin: 0 auto;
 	padding-left: var(--elpuas-preset-padding-lg);
 	padding-right: var(--elpuas-preset-padding-lg);
@@ -112,4 +114,19 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+.alignCenter {
+	text-align: center;
+	align-items: center;
+}
+
+.alignRight {
+	text-align: right;
+	align-items: flex-end;
+}
+
+.alignLeft {
+	text-align: left;
+	align-items: flex-start;
 }

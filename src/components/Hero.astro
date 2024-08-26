@@ -9,6 +9,8 @@ export interface Props {
         subtitle: string;
         ctaText: string;
         ctaLink: string;
+        headingType?: string;
+        classHeadings?: string;
     };
     className?: string;
 }
@@ -18,7 +20,7 @@ const { heroData, className } = Astro.props;
 ---
 
 <section class={`hero ${className ? className : ''}`}>
-    <Heading className="h5">{heroData.subtitle}</Heading>
+    <Heading className={heroData.classHeadings} level={heroData.headingType}>{heroData.subtitle}</Heading>
     <StructuredText data={heroData.title} />
     <Button label={heroData.ctaText} href={heroData.ctaLink} />
 </section>
@@ -43,9 +45,20 @@ const { heroData, className } = Astro.props;
             line-height: 1.25;
             margin: var(--elpuas-preset-margin-xl) 0;
         }
-
+        strong {
+            color: var(--elpuas-preset-color-secondary);
+        }
         &:is(.alignLeft) {
             justify-content: flex-start;
+        }
+
+        &:is(.secondary) {
+            p,
+            strong {
+                font-size: var(--elpuas-preset-fontsize-h2);
+                letter-spacing: -2.5px;
+                max-width: 90%;
+            }
         }
     }
 </style>
