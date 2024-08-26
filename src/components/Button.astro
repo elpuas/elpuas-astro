@@ -1,0 +1,37 @@
+---
+
+export interface Props {
+    label: string;
+    href: string;
+    className?: string;  // Optional className for additional styling
+}
+
+const { label, href, className } = Astro.props;
+
+---
+
+<a href={href} class={`cta-button ${className ? className : ''}`}>
+    {label}
+</a>
+
+<style>
+    .cta-button {
+        background-color: var(--elpuas-preset-color-tertiary);
+        border-radius: 9999px;
+        color: var(--elpuas-preset-color-primary);
+        display: inline-block;
+        font-weight: var(--elpuas-preset-fontweight-semibold);
+        max-width: fit-content;
+        padding: 1.5rem 2.5rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition-duration: .15s;
+        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+
+        &:hover {
+            background-color: var(--elpuas-preset-color-secondary);
+            color: var(--elpuas-preset-color-tertiary);
+        }
+    }
+</style>

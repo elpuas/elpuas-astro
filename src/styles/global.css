@@ -51,6 +51,24 @@
 		0 16px 32px rgba(var(--elpuas-preset-color-black), 33%);
 }
 
+body {
+	font-family: 'Inter', sans-serif;
+	font-size: var(--elpuas-preset-fontsize-base);
+	font-weight: var(--elpuas-preset-fontweight-regular);
+	line-height: 1.6;
+	margin: 0;
+	background-color: var(--elpuas-preset-color-primary);
+	color: var(--elpuas-preset-color-tertiary);
+}
+
+main {
+	max-width: 1240px;
+	margin: 0 auto;
+	padding-left: var(--elpuas-preset-padding-lg);
+	padding-right: var(--elpuas-preset-padding-lg);
+}
+
+
 table {
 	width: 100%;
 }

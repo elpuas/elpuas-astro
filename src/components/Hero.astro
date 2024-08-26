@@ -1,0 +1,51 @@
+---
+import Button from './Button.astro';
+import Heading from './Heading.astro';
+import { StructuredText } from '@datocms/astro/StructuredText';
+
+export interface Props {
+    heroData: {
+        title: any;
+        subtitle: string;
+        ctaText: string;
+        ctaLink: string;
+    };
+    className?: string;
+}
+
+const { heroData, className } = Astro.props;
+
+---
+
+<section class={`hero ${className ? className : ''}`}>
+    <Heading className="h5">{heroData.subtitle}</Heading>
+    <StructuredText data={heroData.title} />
+    <Button label={heroData.ctaText} href={heroData.ctaLink} />
+</section>
+
+<style>
+    .hero {
+        display: flex;
+        flex-direction: column;
+        margin: var(--elpuas-preset-margin-xxxl-large) 0;
+
+        .h5 {
+            text-transform: uppercase;
+            font-weight: var(--elpuas-preset-fontweight-regular);
+            letter-spacing: normal;
+        }
+
+        p,
+        strong {
+            font-size: var(--elpuas-preset-fontsize-h1);
+            font-weight: var(--elpuas-preset-fontweight-bold);
+            letter-spacing: -3.5px;
+            line-height: 1.25;
+            margin: var(--elpuas-preset-margin-xl) 0;
+        }
+
+        &:is(.alignLeft) {
+            justify-content: flex-start;
+        }
+    }
+</style>
