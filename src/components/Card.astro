@@ -1,0 +1,84 @@
+---
+import { Image } from '@datocms/astro/Image';
+
+export interface Props {
+    title: string;
+    slug: string;
+    featuredImage: {
+    responsiveImage: {
+        src: string;
+        width: number;
+        height: number;
+    };
+    };
+    categories: { title: string }[];
+    className?: string;
+}
+
+const { title, slug, featuredImage, categories, className } = Astro.props;
+const linkUrl = `/${slug}`;
+const tags = categories.map((category) => category.title);
+---
+
+<a href={linkUrl} class={`card ${className || ''}`}>
+    <div class="card-image">
+        <Image data={featuredImage.responsiveImage} />
+    </div><!-- card-image -->
+    <div class="card-content">
+        <div class="tags">
+            {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+            ))}
+        </div><!-- tags -->
+        <h3>{title}</h3>
+    </div><!-- card-content -->
+</a><!-- card -->
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        background-color: var(--elpuas-preset-color-secondary);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        background-color: var(--elpuas-preset-color-tertiary);
+        transform: scale(1.05);
+    }
+
+    .card-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-content {
+        padding: 1rem;
+    }
+
+    .tags {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        background-color: var(--elpuas-preset-color-primary);
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 5px;
+        font-size: 0.75rem;
+    }
+
+    h3 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    }
+
+    p {
+    margin: 0;
+    font-size: 1rem;
+    }
+</style>

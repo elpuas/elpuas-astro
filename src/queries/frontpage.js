@@ -1,16 +1,51 @@
 export const FRONTPAGE_QUERY = `
     query Homepage {
         frontPage {
-            slug
-            id
             content {
                 ... on BlockHeroContentRecord {
-                    id
+                    _modelApiKey
                     eyebrow
                     heading {
-                    value
+                        value
+                    }
+                    link {
+                        ... on PageRecord {
+                            slug
+                        }
                     }
                     heroAlign
+                }
+                ... on BlockSelectedArticlesHeroRecord {
+                    id
+                    callout {
+                        content {
+                            value
+                        }
+                        heading {
+                            value
+                        }
+                        link {
+                            ... on PageRecord {
+                            id
+                            slug
+                            }
+                        }
+                    }
+                    articles {
+                        title
+                        slug
+                        featuredImage {
+                            responsiveImage {
+                            src
+                            width
+                            height
+                            }
+                        }
+                        categories {
+                            title
+                        }
+                    }
+                    _modelApiKey
                 }
             }
         }

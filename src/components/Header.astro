@@ -26,7 +26,7 @@ const { navigationItems } = Astro.props;
 		<Hamburger />
 		<div class="internal-links">
 			{navigationItems.map((item) => (
-				<HeaderLink href={`/${item.slug}`}>
+				<HeaderLink href={item.slug === 'home' ? '/' : `/${item.slug}`}>
 					{item.title}
 				</HeaderLink>
 			))}
@@ -136,6 +136,7 @@ const { navigationItems } = Astro.props;
 			height: auto;
 			position: initial;
 			display: initial;
+			transform: initial;
 
 			a {
 				color: var(--elpuas-preset-color-tertiary);

@@ -9,8 +9,8 @@ export interface Props {
         subtitle: string;
         ctaText: string;
         ctaLink: string;
-        headingType?: string;
-        classHeadings?: string;
+        headingLevel?: string;
+        headingClassName?: string;
     };
     className?: string;
 }
@@ -20,7 +20,7 @@ const { heroData, className } = Astro.props;
 ---
 
 <section class={`hero ${className ? className : ''}`}>
-    <Heading className={heroData.classHeadings} level={heroData.headingType}>{heroData.subtitle}</Heading>
+    <Heading className={heroData.headingClassName} level={heroData.headingLevel}>{heroData.subtitle}</Heading>
     <StructuredText data={heroData.title} />
     <Button label={heroData.ctaText} href={heroData.ctaLink} />
 </section>
