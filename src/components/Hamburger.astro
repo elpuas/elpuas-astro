@@ -1,0 +1,54 @@
+---
+
+---
+<div class="hamburger">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+</div>
+
+<style>
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 2rem;
+        height: 2rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 20;
+        position: relative;
+    }
+
+    .line {
+        width: 2rem;
+        height: 0.25rem;
+        background: var(--elpuas-preset-color-black);
+        border-radius: 10px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .active {
+        .line {
+            background: var(--elpuas-preset-color-primary);
+        }
+
+        .line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .line:nth-child(2) {
+            opacity: 0;
+        }
+        .line:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+    }
+
+
+    @media (max-width: 900px) {
+        .hamburger {
+            display: flex;
+        }
+    }
