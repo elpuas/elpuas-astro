@@ -52,7 +52,7 @@ const { headline, content, linkText, linkUrl, articles } = Astro.props;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
-        align-items: start;
+        align-items: center;
 
         .cards {
             display: flex;
@@ -65,14 +65,15 @@ const { headline, content, linkText, linkUrl, articles } = Astro.props;
             flex-direction: column;
             justify-content: center;
 
-            h2 {
-                margin-bottom: 1rem;
-                font-size: var(--elpuas-preset-fontsize-h2);
-            }
-
             p {
-                margin-bottom: 1.5rem;
-                font-size: var(--elpuas-preset-fontsize-p);
+                font-size: var(--elpuas-preset-fontsize-h5);
+                line-height: 1.25;
+                margin-bottom: 1rem;
+                &:first-of-type {
+                    font-size: var(--elpuas-preset-fontsize-h3);
+                    font-weight: 700;
+                    letter-spacing: -0.05rem;
+                }
             }
         }
     }

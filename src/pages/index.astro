@@ -43,10 +43,12 @@ const {
 	articles 
 } = selectedFeatureCards;
 
+const title = "Home"
+const description = "Welcome to the home page of El Puas"
 const linkText = "Learn More";
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description}>
 	<Hero heroData={heroTopData} className={hero?.heroAlign} />
 	<SelectedFeaturedCards
 		headline={headline}

@@ -1,5 +1,7 @@
 ---
 import { Image } from '@datocms/astro/Image';
+import Heading from './Heading.astro';
+import Logo from './Logo.astro';
 
 export interface Props {
     title: string;
@@ -21,64 +23,102 @@ const tags = categories.map((category) => category.title);
 ---
 
 <a href={linkUrl} class={`card ${className || ''}`}>
-    <div class="card-image">
-        <Image data={featuredImage.responsiveImage} />
-    </div><!-- card-image -->
     <div class="card-content">
+        <Heading level='h5'>{title}</Heading>
+        <author>
+            <span class="avatar">
+                <Logo />
+            </span>
+            <span class="name">El Puas</span>
+        </author>
+    </div><!-- card-content -->
+    <div class="card-image">
         <div class="tags">
             {tags.map((tag) => (
             <span class="tag">{tag}</span>
             ))}
         </div><!-- tags -->
-        <h3>{title}</h3>
-    </div><!-- card-content -->
+        <Image data={featuredImage.responsiveImage} />
+    </div><!-- card-image -->
 </a><!-- card -->
 
 <style>
     .card {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         text-decoration: none;
         color: inherit;
-        background-color: var(--elpuas-preset-color-secondary);
+        min-height: 300px;
+        background-color: var(--elpuas-preset-color-tertiary);
         transition: background-color 0.3s ease, transform 0.3s ease;
         overflow: hidden;
-    }
 
-    .card:hover {
-        background-color: var(--elpuas-preset-color-tertiary);
-        transform: scale(1.05);
-    }
+        &:hover {
+            background-color: var(--elpuas-preset-color-secondary);
+            transform: scale(1.05);
+            box-shadow: var(--elpuas-preset-box-shadow);
 
-    .card-image img {
-        width: 100%;
-        height: auto;
-    }
+            .card-content {
+                h5 {
+                    color: var(--elpuas-preset-color-tertiary);
+                }
+            }
+        }
 
-    .card-content {
-        padding: 1rem;
-    }
+        .card-image {
+            position: relative;
+            img {
+                width: 100%;
+                height: 100% !important;
+                object-fit: cover;
+            }
+        }
 
-    .tags {
-        display: flex;
-        gap: 0.5rem;
-    }
+        .card-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            h5 {
+                color: var(--elpuas-preset-color-primary);
+            }
 
-    .tag {
-        background-color: var(--elpuas-preset-color-primary);
-        color: white;
-        padding: 0.2rem 0.5rem;
-        border-radius: 5px;
-        font-size: 0.75rem;
-    }
+            author {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
 
-    h3 {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
-    }
+            .avatar {
+                svg {
+                    fill: var(--elpuas-preset-color-primary);
+                    width: 24px;
+                    height: 24px;
+                }
+            }
 
-    p {
-    margin: 0;
-    font-size: 1rem;
+            .name,
+            span {
+                color: var(--elpuas-preset-color-primary);
+                line-height: 1;
+            }
+        }
+
+        .tags {
+            position:absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 0.5rem;
+
+            .tag {
+                background-color: var(--elpuas-preset-color-black);
+                color: var(--elpuas-preset-color-primary);
+                padding: var(--elpuas-preset-space-xxs) var(--elpuas-preset-space-xs);
+                border-top-left-radius: var(--elpuas-preset-space-xs);
+                border-bottom-right-radius: var(--elpuas-preset-space-xs);
+                font-size: 0.75rem;
+            }
+        }
     }
 </style>
