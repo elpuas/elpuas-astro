@@ -1,0 +1,124 @@
+---
+import { Image } from '@datocms/astro/Image';
+import Heading from './Heading.astro';
+import Logo from './Logo.astro';
+
+export interface Props {
+    title: string;
+    slug: string;
+    featuredImage: {
+    responsiveImage: {
+        src: string;
+        width: number;
+        height: number;
+    };
+    };
+    categories: { title: string }[];
+    className?: string;
+}
+
+const { title, slug, featuredImage, categories, className } = Astro.props;
+const linkUrl = `/${slug}`;
+const tags = categories.map((category) => category.title);
+---
+
+<a href={linkUrl} class={`card ${className || ''}`}>
+    <div class="card-content">
+        <Heading level='h5'>{title}</Heading>
+        <author>
+            <span class="avatar">
+                <Logo />
+            </span>
+            <span class="name">El Puas</span>
+        </author>
+    </div><!-- card-content -->
+    <div class="card-image">
+        <div class="tags">
+            {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+            ))}
+        </div><!-- tags -->
+        <Image data={featuredImage.responsiveImage} />
+    </div><!-- card-image -->
+</a><!-- card -->
+
+<style>
+    .card {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        text-decoration: none;
+        color: inherit;
+        min-height: 300px;
+        background-color: var(--elpuas-preset-color-tertiary);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        overflow: hidden;
+
+        &:hover {
+            background-color: var(--elpuas-preset-color-secondary);
+            transform: scale(1.05);
+            box-shadow: var(--elpuas-preset-box-shadow);
+
+            .card-content {
+                h5 {
+                    color: var(--elpuas-preset-color-tertiary);
+                }
+            }
+        }
+
+        .card-image {
+            position: relative;
+            img {
+                width: 100%;
+                height: 100% !important;
+                object-fit: cover;
+            }
+        }
+
+        .card-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            h5 {
+                color: var(--elpuas-preset-color-primary);
+            }
+
+            author {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .avatar {
+                svg {
+                    fill: var(--elpuas-preset-color-primary);
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            .name,
+            span {
+                color: var(--elpuas-preset-color-primary);
+                line-height: 1;
+            }
+        }
+
+        .tags {
+            position:absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 0.5rem;
+
+            .tag {
+                background-color: var(--elpuas-preset-color-black);
+                color: var(--elpuas-preset-color-primary);
+                padding: var(--elpuas-preset-space-xxs) var(--elpuas-preset-space-xs);
+                border-top-left-radius: var(--elpuas-preset-space-xs);
+                border-bottom-right-radius: var(--elpuas-preset-space-xs);
+                font-size: 0.75rem;
+            }
+        }
+    }
+</style>

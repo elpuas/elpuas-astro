@@ -1,51 +1,61 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+// index.astro (or any other page)
+
+import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { NAVIGATION_QUERY } from '../queries/navigation';
+import SelectedFeaturedCards from '../components/SelectedFeaturedCards.astro';
 import { FRONTPAGE_QUERY } from '../queries/frontpage';
 import { fetchGraphQL } from '../utils/fetch-graphql';
 
-const menu = await fetchGraphQL(NAVIGATION_QUERY);
+// Fetch data
 const data = await fetchGraphQL(FRONTPAGE_QUERY);
-const hero = data.frontPage.content[0];
-const bottom = data.frontPage.content.slice(-1)[0];
 
+// Destructure front page content
+const [hero, , selectedFeatureCards, bottom] = data.frontPage.content;
+
+// Prepare hero and bottom data
 const heroTopData = {
 	title: hero.heading.value,
 	subtitle: hero.eyebrow,
 	ctaText: 'Learn More',
-	ctaLink: '/about',
-	classHeadings: 'h5',
+	ctaLink: `/${hero.link.slug}`,
+	headingClassName: 'h5',
+	heroAlign: hero.heroAlign,
 };
 
 const bottomData = {
 	title: bottom.heading.value,
 	subtitle: bottom.eyebrow,
 	ctaText: 'Let\'s Talk',
-	ctaLink: '/lets-talk',
-	headingType: 'h2',
-	classHeadings: 'h5',
+	ctaLink: `/${bottom.link.slug}`,
+	headingLevel: 'h2',
+	headingClassName: 'h5',
+	heroAlign: bottom.heroAlign,
 };
 
+// Destructure data for SelectedFeaturedCards
+const { 
+	callout: [{ 
+	heading: { value: headline }, 
+	content: { value: content }, 
+	link: { slug: linkUrl } 
+	}], 
+	articles 
+} = selectedFeatureCards;
+
+const title = "Home"
+const description = "Welcome to the home page of El Puas"
+const linkText = "Learn More";
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header navigationItems={menu.navigation.menu} />
-		<main>
-			<Hero heroData={heroTopData} className={hero?.heroAlign} />
-			<Hero heroData={bottomData} className={`secondary ${bottom?.heroAlign}`} />
-		</main>
-		<Footer />
-		<script>
-			import '../scripts/menu.js';
-		</script>
-	</body>
-</html>
+<BaseLayout title={title} description={description}>
+	<Hero heroData={heroTopData} className={hero?.heroAlign} />
+	<SelectedFeaturedCards
+		headline={headline}
+		content={content}
+		linkText={linkText}
+		linkUrl={`/${linkUrl}`}
+		articles={articles}
+	/>
+	<Hero heroData={bottomData} className={`secondary ${bottom?.heroAlign}`} />
+</BaseLayout>

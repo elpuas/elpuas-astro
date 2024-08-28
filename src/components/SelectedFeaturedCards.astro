@@ -1,0 +1,80 @@
+---
+import Card from './Card.astro';
+import Button from './Button.astro';
+import { StructuredText } from '@datocms/astro/StructuredText';
+
+export interface Article {
+    title: string;
+    slug: string;
+    featuredImage: {
+        responsiveImage: {
+            src: string;
+            width: number;
+            height: number;
+        };
+    };
+    categories: { title: string }[];
+}
+
+export interface Props {
+    headline: any;
+    content: any;
+    linkText: string;
+    linkUrl: string;
+    articles: Article[];
+}
+
+const { headline, content, linkText, linkUrl, articles } = Astro.props;
+---
+
+<section class="selected-feature-cards">
+    <div class="cards">
+        {articles.map((article) => (
+            <Card
+                title={article.title}
+                slug={article.slug}
+                featuredImage={article.featuredImage}
+                categories={article.categories}
+                className="selected-feature-card"
+            />
+        ))}
+    </div><!-- cards -->
+    <div class="content">
+        <StructuredText data={headline} />
+        <StructuredText data={content} />
+        <Button label={linkText} href={linkUrl} />
+    </div><!-- content -->
+</section><!-- selected-feature-cards -->
+
+<style>
+    .selected-feature-cards {
+        container-type: inline-size;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+
+        .cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            p {
+                font-size: var(--elpuas-preset-fontsize-h5);
+                line-height: 1.25;
+                margin-bottom: 1rem;
+                &:first-of-type {
+                    font-size: var(--elpuas-preset-fontsize-h3);
+                    font-weight: 700;
+                    letter-spacing: -0.05rem;
+                }
+            }
+        }
+    }
+</style>
