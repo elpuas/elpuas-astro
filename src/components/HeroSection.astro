@@ -1,0 +1,119 @@
+---
+import { Image } from '@datocms/astro/Image';
+import Heading from './Heading.astro';
+import Author from './Author.astro';
+
+export interface HeroSectionProps {
+    title: string;
+    articleAuthor: string;
+    articleDisplayDate: string;
+    categories: { title: string; slug: string }[];
+    featuredImage: {
+    responsiveImage: {
+        src: string;
+        height: number;
+        width: number;
+    };
+    title: string | null;
+    };
+}
+
+const { title, articleAuthor, articleDisplayDate, categories, featuredImage } = Astro.props;
+
+---
+
+<section class="hero-section alignFull">
+    <div class="image-wrapper">
+        <Image data={featuredImage.responsiveImage} />
+    </div>
+    <div class="content-wrapper">
+        <div class="categories">
+        {categories.map(category => (
+            <span class="category">{category.title}</span>
+        ))}
+        </div>
+        <Heading level='h1'>{title}</Heading>
+        <div class="author-date">
+            <Author author={articleAuthor} date={articleDisplayDate} />
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        container-type: inline-size;
+        position: relative;
+        padding-top: 75px;
+        height: 662px;
+        display: flex;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        @media screen and (900px >= width) {
+            h1 {
+                font-size: 56px;
+            }  
+        }
+
+        .image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: var(--elpuas-preset-color-black);
+
+            img {
+                object-fit: cover;
+                object-position: center top;
+                height: 100% !important;
+                filter: brightness(.5);
+            }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: var(--elpuas-preset-content-width);
+            margin: 0 auto;
+            padding: var(--elpuas-preset-padding-lg);
+            text-align: left;
+            color: var(--elpuas-preset-color-primary);
+
+            .categories {
+                display: flex;
+                justify-content: flex-start;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .category {
+                background-color: var(--elpuas-preset-color-secondary);
+                border-radius: 9999px;
+                color: var(--elpuas-preset-color-tertiary);
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+                text-transform: uppercase;
+            }
+
+            .author-date {
+                font-size: 0.75rem;
+                margin-top: 1rem;
+            }
+
+            .author {
+                margin-right: 1rem;
+            }
+        }
+
+        @container (min-width: 900px) {
+            padding-top: 0;
+            padding-bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: left;
+        }
+    }
+</style>

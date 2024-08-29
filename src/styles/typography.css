@@ -69,27 +69,36 @@ h1,
     font-size: var(--elpuas-preset-fontsize-h1);
     font-weight: var(--elpuas-preset-fontweight-bold);
     letter-spacing: -3.5px;
+
+    @media (max-width: 900px) {
+        letter-spacing: -1.5px;
+    }
 }
 
 h2,
-.h2 {
+.h2,
+h2 strong {
     font-size: var(--elpuas-preset-fontsize-h2);
 }
 
 h3,
-.h3 {
+.h3,
+h3 strong {
     font-size: var(--elpuas-preset-fontsize-h3);
 }
 
 h4,
-.h4 {
+.h4,
+h4 strong {
     font-size: var(--elpuas-preset-fontsize-h4);
 }
 
 h5,
 h6,
 .h5,
-.h6 {
+.h6,
+h5 strong,
+h6 strong {
     font-size: var(--elpuas-preset-fontsize-h5);
 }
 
