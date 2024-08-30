@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import { fetchGraphQL } from '../../utils/fetch-graphql';
+import { ARTICLES_QUERY } from '../../queries/articles';
+
+const response = await fetchGraphQL(ARTICLES_QUERY);
 
 ---
 
 <BaseLayout>
-	<p>Coming Soon</p>
+	<ul>
+		{response.allArticles.map(post => (
+			<li>
+				<a href={`/blog/${post.slug}`}><h4>{post.title}</h4></a>
+				<ul>
+					{post.categories.map(category => (
+						<li>{category.title}</li>
+					))}
+				</ul>
+			</li>
+		))}
+	</ul>
 </BaseLayout>

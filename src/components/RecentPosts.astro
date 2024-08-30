@@ -1,0 +1,41 @@
+---
+// RecentPosts.astro
+import Card from './Card.astro';
+import Heading from './Heading.astro';
+
+const { posts } = Astro.props;
+
+---
+
+<section class="recent-posts">
+    <Heading level='h2'>Recent Posts</Heading>
+    <div class="posts-container">
+        {posts.map((post) => (
+            <Card
+                title={post.title}
+                slug={post.slug}
+                featuredImage={post.featuredImage}
+                categories={post.categories}
+                className="selected-feature-card"
+            />
+        ))}
+    </div><!-- posts-container -->
+</section><!-- recent-posts -->
+
+<style>
+    .recent-posts {
+        container-type: inline-size;
+        display: grid;
+        gap: 2rem;
+
+        h2 {
+            margin-bottom: 2rem;
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+    }
+</style>

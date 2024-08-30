@@ -5,6 +5,7 @@ import { fetchGraphQL } from '../../utils/fetch-graphql';
 import { ARTICLES_QUERY } from '../../queries/articles';
 import HeroSection from '../../components/HeroSection.astro';
 import { StructuredText } from '@datocms/astro/StructuredText';
+import RecentPosts from '../../components/RecentPosts.astro';
 
 
 export async function getStaticPaths() {
@@ -89,9 +90,13 @@ function formatDate(dateString) {
 
 const formattedDate = formatDate(articleDisplayDate);
 
-const Code = ({ code }) => {
-  return '<code>' + JSON.stringify(code) + '</code>';
-};
+const relatedPosts = response.allArticles.filter(
+  article =>
+    article.slug !== slug &&
+    article.categories.some(category =>
+      categories.map(cat => cat.slug).includes(category.slug)
+    )
+).slice(0, 2);
 
 ---
 
@@ -110,6 +115,7 @@ const Code = ({ code }) => {
       }) 
     }
     <!-- TODO: Recent Similar Post by Category -->
+    <RecentPosts posts={relatedPosts} />
 	</article>
 </BaseLayout>
 

@@ -18,11 +18,11 @@ export interface Props {
 }
 
 const { title, slug, featuredImage, categories, className } = Astro.props;
-const linkUrl = `/${slug}`;
+const linkUrl = `/blog/${slug}`;
 const tags = categories.map((category) => category.title);
 ---
 
-<a href={linkUrl} class={`card ${className || ''}`}>
+<a href={linkUrl} class={`card ${className || ''}`} aria-label={title}>
     <div class="card-content">
         <Heading level='h5'>{title}</Heading>
         <Author />
