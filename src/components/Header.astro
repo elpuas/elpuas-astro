@@ -31,10 +31,31 @@ const { navigationItems } = Astro.props;
 					{item.title}
 				</HeaderLink>
 			))}
-		</div>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+		</div><!-- /.internal-links -->
 	</nav>
 </header>
+
 <style>
+	body:has(article) {
+		header {
+			position: relative;
+			z-index: 10;
+		}
+
+		.brand-logo svg {
+			fill: var(--elpuas-preset-color-primary) !important;
+		}
+
+		.internal-links a {
+			color: var(--elpuas-preset-color-primary) !important;
+
+			&:hover {
+				color: var(--elpuas-preset-color-secondary) !important;
+			}
+		}
+
+	}
 	header {
 		container-type: inline-size;
 		container-name: header;

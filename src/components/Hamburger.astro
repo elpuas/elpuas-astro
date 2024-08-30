@@ -2,12 +2,18 @@
 
 ---
 <div class="hamburger">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
+    <span class="patty"></span>
+    <span class="patty"></span>
+    <span class="patty"></span>
 </div>
 
 <style>
+    body:has(article) {
+        .patty {
+            background: var(--elpuas-preset-color-primary) !important;
+            
+        }
+    }
     .hamburger {
         display: none;
         flex-direction: column;
@@ -22,7 +28,7 @@
         position: relative;
     }
 
-    .line {
+    .patty {
         width: 2rem;
         height: 0.25rem;
         background: var(--elpuas-preset-color-black);
@@ -31,17 +37,17 @@
     }
 
     .active {
-        .line {
+        .patty {
             background: var(--elpuas-preset-color-primary);
         }
 
-        .line:nth-child(1) {
+        .patty:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
-        .line:nth-child(2) {
+        .patty:nth-child(2) {
             opacity: 0;
         }
-        .line:nth-child(3) {
+        .patty:nth-child(3) {
             transform: rotate(-45deg) translate(10px, -10px);
         }
     }

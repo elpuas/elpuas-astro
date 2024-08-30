@@ -1,20 +1,128 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Debug } from 'astro:components'; // Import the Debug component
+import { fetchGraphQL } from '../../utils/fetch-graphql';
+import { ARTICLES_QUERY } from '../../queries/articles';
+import HeroSection from '../../components/HeroSection.astro';
+import { StructuredText } from '@datocms/astro/StructuredText';
+import RecentPosts from '../../components/RecentPosts.astro';
+
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
-}
-type Props = CollectionEntry<'blog'>;
+  // Fetch all the articles to get their slugs
+  const response = await fetch(
+    'https://graphql.datocms.com/',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery {
+            allArticles {
+              slug
+            }
+          }
+        `
+      }),
+    }
+  );
 
-const post = Astro.props;
-const { Content } = await post.render();
+  // Parse the JSON response
+  const parsedResponse = await response.json();
+
+  console.log('Response from getStaticPaths:', parsedResponse);
+
+  console.log('Response from parsedResponse.data', parsedResponse.data);
+
+  console.log('Response from parsedResponse.data.allArticles', parsedResponse.data.allArticles);
+
+  // Check if the response is valid and contains the expected data
+	if (!parsedResponse || !parsedResponse.data || !parsedResponse.data.allArticles) {
+	throw new Error('Failed to fetch articles or no articles returned');
+	}
+
+	const pathsArray = parsedResponse.data.allArticles.map(article => ({
+		params: { slug: article.slug },
+	}));
+
+	console.log('Paths array: ', pathsArray);
+
+	return pathsArray;
+}
+
+// Extract the slug from the URL parameters
+const { slug } = Astro.params;
+
+// Fetch the data for the specific post
+const response = await fetchGraphQL(ARTICLES_QUERY);
+
+if (!response || !response.allArticles) {
+	throw new Error('Failed to fetch post or no posts returned');
+}
+
+const post = response.allArticles.find(article => article.slug === slug);
+
+if (!post) {
+  throw new Error(`Post not found for slug: ${slug}`);
+}
+
+// Extracting metadata from _seoMetaTags
+const seoMetaTags = post._seoMetaTags;
+const titleTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:title' || tag.attributes?.name === 'twitter:title');
+const descriptionTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:description' || tag.attributes?.name === 'twitter:description');
+const imageTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:image' || tag.attributes?.name === 'twitter:image');
+
+// Fallback to defaults if tags are not found
+const metaTitle = titleTag ? titleTag.attributes.content : post.title;
+const metaDescription = descriptionTag ? descriptionTag.attributes.content : 'Default description for the post.';
+const metaImage = imageTag ? imageTag.attributes.content : post.featuredImage?.responsiveImage.src;
+
+const { title, articleAuthor, articleDisplayDate, categories, featuredImage } = post;
+
+function formatDate(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${month}/${day}/${year}`;
+}
+
+const formattedDate = formatDate(articleDisplayDate);
+
+const relatedPosts = response.allArticles.filter(
+  article =>
+    article.slug !== slug &&
+    article.categories.some(category =>
+      categories.map(cat => cat.slug).includes(category.slug)
+    )
+).slice(0, 2);
+
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<BaseLayout title={metaTitle} description={metaDescription} image={metaImage}>
+	<article class="article">
+    <HeroSection title={title} articleAuthor={articleAuthor} articleDisplayDate={formattedDate} categories={categories} featuredImage={featuredImage} />
+    { post.content.map((block) => {
+        switch (block._modelApiKey) {
+          case 'block_paragraph':
+              return <StructuredText data={block.content.value} />;
+          case 'block_code':
+              return <StructuredText data={block.code} />;
+          default:
+              return null;
+        } 
+      }) 
+    }
+    <!-- TODO: Recent Similar Post by Category -->
+    <RecentPosts posts={relatedPosts} />
+	</article>
+</BaseLayout>
+
+<style>
+article {
+  position: relative;
+  z-index: 5;
+  top: -75px;
+}
+</style>
