@@ -101,8 +101,15 @@ const relatedPosts = response.allArticles.filter(
 ---
 
 <BaseLayout title={metaTitle} description={metaDescription} image={metaImage}>
-	<article class="article">
-    <HeroSection title={title} articleAuthor={articleAuthor} articleDisplayDate={formattedDate} categories={categories} featuredImage={featuredImage} />
+  <article class="article">
+    <HeroSection 
+      title={title} 
+      articleAuthor={articleAuthor} 
+      articleDisplayDate={formattedDate} 
+      categories={categories} 
+      featuredImage={featuredImage} 
+    />
+    <div class="spacer"></div>
     { post.content.map((block) => {
         switch (block._modelApiKey) {
           case 'block_paragraph':
@@ -124,5 +131,9 @@ article {
   position: relative;
   z-index: 5;
   top: -75px;
+
+  h2 strong {
+    font-size: var(--elpuas-preset-fontsize-h3);
+  }
 }
 </style>

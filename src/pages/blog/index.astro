@@ -2,22 +2,112 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { fetchGraphQL } from '../../utils/fetch-graphql';
 import { ARTICLES_QUERY } from '../../queries/articles';
+import Heading from '../../components/Heading.astro';
 
 const response = await fetchGraphQL(ARTICLES_QUERY);
+
+function getExcerpt(seoMetaTags) {
+	const descriptionTag = seoMetaTags.find(tag => 
+	tag.attributes?.property === 'og:description' || tag.attributes?.name === 'description'
+	);
+	return descriptionTag ? descriptionTag.attributes.content : '';
+}
 
 ---
 
 <BaseLayout>
-	<ul>
+	<div class="spacer"></div>
+	<Heading level="h1">Blog.</Heading>
+	<Heading level="h5">Welcome to my blog. Explore my experiences as a developer—solving problems, facing challenges, and sharing what I’ve learned along the way.</Heading>
+	<ul class="posts-wrapper" role="list" aria-labelledby="blog-list">
 		{response.allArticles.map(post => (
-			<li>
-				<a href={`/blog/${post.slug}`}><h4>{post.title}</h4></a>
-				<ul>
+			<li class="the-post">
+				<ul class="post-categories" role="list" aria-labelledby={`post-title-${post.slug}`}>
 					{post.categories.map(category => (
 						<li>{category.title}</li>
 					))}
 				</ul>
+				<a href={`/blog/${post.slug}`} aria-controls={`post-content-${post.slug}`}>
+					<Heading className={`post-title-${post.slug}`} level='h5'>{post.title}</Heading>
+				</a>
+				<p>{getExcerpt(post._seoMetaTags)}</p>
+				<a href={`/blog/${post.slug}`} class="read-more" aria-label="read-more">Tell me more</a>
 			</li>
 		))}
 	</ul>
 </BaseLayout>
+
+<style>
+	body:has(.expanded) {
+		.posts-wrapper {
+			z-index: -1;
+		}
+	}
+	.posts-wrapper {
+		container-type: inline-size;
+		display: grid;
+		gap: 2rem;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		list-style: none;
+		margin-top: var(--elpuas-preset-space-xl);
+		padding: 0;
+		position: relative;
+		z-index: 2;
+		.the-post {
+			background-color: var(--elpuas-preset-color-primary);
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 2rem;
+			padding: var(--elpuas-preset-space-md);
+			transform: scale(1);
+			transition: background-color 0.3s ease, transform 0.3s ease; /* Add transitions */
+
+			&:has(a:hover),
+			&:has(a:focus),
+			&:has(a.focus-visible) {
+				background-color: var(--elpuas-preset-color-secondary);
+				transform: scale(1.05);
+				.read-more {
+					color: var(--elpuas-preset-color-primary);
+				}
+
+				.post-categories li {
+					color: var(--elpuas-preset-color-primary);
+				}
+			}
+
+			p {
+				color: var(--elpuas-preset-color-black);
+				font-size: 16px;
+				margin: 8px 0 24px;
+			}
+
+			.read-more {
+				color: var(--elpuas-preset-color-black);
+				margin-top: auto;
+				text-decoration-color: var(--elpuas-preset-color-secondary);
+				text-decoration-line: underline;
+				text-decoration-style: solid;
+				text-decoration-thickness: 4px;
+			}
+		}
+
+		a:has(h5) {
+			text-decoration: none;
+			color: var(--elpuas-preset-color-tertiary);
+		}
+
+		.post-categories {
+			display: flex;
+			justify-content: flex-start;
+			list-style: none;
+			padding: 0;
+		}
+
+		.post-categories li {
+			margin-right: 0.25rem;
+			font-size: 14px;
+			color: var(--elpuas-preset-color-secondary);
+		}
+	}
+</style>

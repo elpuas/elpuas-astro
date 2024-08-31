@@ -81,6 +81,7 @@ img {
 code {
 	padding: var(--elpuas-preset-padding-xxs) var(--elpuas-preset-padding-xs);
 	border-radius: 2px;
+	color: var(--elpuas-preset-color-black);
 }
 pre {
 	padding: 1.5em;
@@ -140,4 +141,9 @@ hr {
 
 body:has(.hamburger.active) {
 	overflow: hidden;
+}
+
+.spacer {
+	display: block;
+	margin-top: var(--elpuas-preset-margin-xxxl-large);
 }
