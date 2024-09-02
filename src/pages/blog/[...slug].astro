@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Debug } from 'astro:components'; // Import the Debug component
 import { fetchGraphQL } from '../../utils/fetch-graphql';
 import { ARTICLES_QUERY } from '../../queries/articles';
 import HeroSection from '../../components/HeroSection.astro';
@@ -34,12 +33,6 @@ export async function getStaticPaths() {
   // Parse the JSON response
   const parsedResponse = await response.json();
 
-  console.log('Response from getStaticPaths:', parsedResponse);
-
-  console.log('Response from parsedResponse.data', parsedResponse.data);
-
-  console.log('Response from parsedResponse.data.allArticles', parsedResponse.data.allArticles);
-
   // Check if the response is valid and contains the expected data
 	if (!parsedResponse || !parsedResponse.data || !parsedResponse.data.allArticles) {
 	throw new Error('Failed to fetch articles or no articles returned');
@@ -48,8 +41,6 @@ export async function getStaticPaths() {
 	const pathsArray = parsedResponse.data.allArticles.map(article => ({
 		params: { slug: article.slug },
 	}));
-
-	console.log('Paths array: ', pathsArray);
 
 	return pathsArray;
 }
@@ -121,7 +112,6 @@ const relatedPosts = response.allArticles.filter(
         } 
       }) 
     }
-    <!-- TODO: Recent Similar Post by Category -->
     <RecentPosts posts={relatedPosts} />
 	</article>
 </BaseLayout>

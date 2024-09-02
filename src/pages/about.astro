@@ -1,13 +1,75 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Heading from '../components/Heading.astro';
----
+import { ABOUT_QUERY } from '../queries/page-about';
+import { fetchGraphQL } from '../utils/fetch-graphql';
+import { StructuredText } from '@datocms/astro/StructuredText';
+import Gallery from '../components/Gallery.astro';
 
-<BaseLayout
-	title="About Me."
-	description="I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community."
->
+const response = await fetchGraphQL(ABOUT_QUERY);
+
+if (!response || !response.page) {
+	throw new Error('Failed to fetch page data or no page data returned');
+}
+
+const page = response.page;
+
+// Extracting metadata from _seoMetaTags
+const seoMetaTags = page._seoMetaTags;
+const titleTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:title' || tag.attributes?.name === 'twitter:title');
+const descriptionTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:description' || tag.attributes?.name === 'twitter:description');
+const imageTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:image' || tag.attributes?.name === 'twitter:image');
+
+const metaTitle = titleTag ? titleTag.attributes.content : page.title;
+const metaDescription = descriptionTag ? descriptionTag.attributes.content : 'I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community.';
+const metaImage = imageTag ? imageTag.attributes.content : null;
+---
+<BaseLayout title={metaTitle} description={metaDescription} image={metaImage}>
 	<div class="spacer"></div>
 	<Heading level="h1">About Me</Heading>
-	<Heading level="h5">I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community.</Heading>
+	<Heading level="h5" className='excerpt'>I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community.</Heading>
+	<section class="page-content">
+		{page.content.map(block => {
+			switch (block._modelApiKey) {
+			case 'block_paragraph':
+				return <StructuredText data={block.content.value} />;
+			case 'block_image':
+				return <img src={block.image.responsiveImage.src} alt={block.image.responsiveImage.alt} />;
+			case 'block_gallery':
+				return <Gallery images={block.images} />;
+			case 'block_video_hero':
+				return (
+				<div>
+					<h2>{block.callout[0].heading.value.document.children[0].children[0].value}</h2>
+					<p>{block.callout[0].content.value.document.children[0].children[0].value}</p>
+					<iframe src={block.videoUrl} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				</div>
+				);
+			case 'block_text_and_image':
+				return null;
+			case 'block_selected_articles_hero':
+				return (
+				<div class="selected-articles-hero">
+					{block.articles.map(article => (
+					<div class="article-card">
+						<img src={article.featuredImage.responsiveImage.src} alt={article.featuredImage.responsiveImage.alt} />
+						<h5>{article.title}</h5>
+						<p>{article.seo.description}</p>
+						<a href={`/blog/${article.slug}`}>Read more</a>
+					</div>
+					))}
+				</div>
+				);
+			default:
+				return <StructuredText data={block.content.value} />;
+			}
+		})}
+		</section>
 </BaseLayout>
+<style>
+	.page-content {
+		container-type: inline-size;
+		margin-top: var(--elpuas-preset-space-xl);
+	}
+</style>
+

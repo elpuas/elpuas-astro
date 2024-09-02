@@ -82,6 +82,7 @@ code {
 	padding: var(--elpuas-preset-padding-xxs) var(--elpuas-preset-padding-xs);
 	border-radius: 2px;
 	color: var(--elpuas-preset-color-black);
+	background-color: var(--elpuas-preset-color-secondary);
 }
 pre {
 	padding: 1.5em;
