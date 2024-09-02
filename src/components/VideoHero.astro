@@ -1,0 +1,82 @@
+---
+import Heading from "./Heading.astro";
+
+const { heading, content, videoUrl } = Astro.props;
+---
+
+<div class="video-hero">
+    <div class="text-content">
+        <Heading level='h3' className="heading-video-hero">{heading}</Heading>
+        <p>{content}</p>
+    </div>
+    <div class="video-content">
+        <iframe
+            src={videoUrl}
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+        ></iframe>
+    </div><!-- video-content -->
+</div><!-- video-hero -->
+
+<style>
+    .video-hero {
+        container-type: inline-size;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+
+        .text-content {
+            flex: 1;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center ;
+            flex-direction: column;
+
+            p {
+                margin-bottom: 0;
+            }
+
+            .heading-video-hero {
+                margin-bottom: var(--elpuas-preset-space-sm);
+                letter-spacing: -0.8px;
+            }
+        }
+
+        .video-content {
+            flex: 1;
+            max-width: 100%;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+
+        iframe {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 4px;
+            box-shadow: inset 0 0 0 1px var(--elpuas-preset-color-tertiary);
+        }
+
+        @container (max-width: 900px) {
+            .text-content {
+                max-width: 50%;
+            }
+
+            .video-content {
+                max-width: 50%;
+            }
+        }
+    }
+
+    @media screen and (min-width: 900px) {
+        .video-hero {
+            flex-direction: row;
+        }
+    }
+
+</style>

@@ -15,6 +15,19 @@ export const FRONTPAGE_QUERY = `
                     }
                     heroAlign
                 }
+                ... on BlockVideoHeroRecord {
+                    id
+                    callout {
+                        content {
+                            value
+                        }
+                        heading {
+                            value
+                        }
+                    }
+                    videoUrl
+                    _modelApiKey
+                }
                 ... on BlockSelectedArticlesHeroRecord {
                     id
                     callout {

@@ -6,12 +6,14 @@ import Hero from '../components/Hero.astro';
 import SelectedFeaturedCards from '../components/SelectedFeaturedCards.astro';
 import { FRONTPAGE_QUERY } from '../queries/frontpage';
 import { fetchGraphQL } from '../utils/fetch-graphql';
+import VideoHero from '../components/VideoHero.astro';
+import { Debug } from 'astro:components';
 
 // Fetch data
 const data = await fetchGraphQL(FRONTPAGE_QUERY);
 
 // Destructure front page content
-const [hero, , selectedFeatureCards, bottom] = data.frontPage.content;
+const [hero, videoHero, selectedFeatureCards, bottom] = data.frontPage.content;
 
 // Prepare hero and bottom data
 const heroTopData = {
@@ -46,10 +48,20 @@ const {
 const title = "Home"
 const description = "Welcome to the home page of El Puas"
 const linkText = "Learn More";
+
+const videoHeading = videoHero.callout[0].heading.value.document.children[0].children[0].value;
+const videoContent = videoHero.callout[0].content.value.document.children[0].children[0].value;
+const videoUrl = videoHero.videoUrl;
 ---
 
 <BaseLayout title={title} description={description}>
 	<Hero heroData={heroTopData} className={hero?.heroAlign} />
+	<VideoHero 
+		videoUrl={videoUrl}
+		heading={videoHeading}
+		content={videoContent}
+	/>
+	<div class="spacer"></div>
 	<SelectedFeaturedCards
 		headline={headline}
 		content={content}

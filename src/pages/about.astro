@@ -5,6 +5,8 @@ import { ABOUT_QUERY } from '../queries/page-about';
 import { fetchGraphQL } from '../utils/fetch-graphql';
 import { StructuredText } from '@datocms/astro/StructuredText';
 import Gallery from '../components/Gallery.astro';
+import { Image } from '@datocms/astro/Image';
+import VideoHero from '../components/VideoHero.astro';
 
 const response = await fetchGraphQL(ABOUT_QUERY);
 
@@ -34,37 +36,37 @@ const metaImage = imageTag ? imageTag.attributes.content : null;
 			case 'block_paragraph':
 				return <StructuredText data={block.content.value} />;
 			case 'block_image':
-				return <img src={block.image.responsiveImage.src} alt={block.image.responsiveImage.alt} />;
+				return <Image data={block.image.responsiveImage} />;
 			case 'block_gallery':
 				return <Gallery images={block.images} />;
 			case 'block_video_hero':
 				return (
-				<div>
-					<h2>{block.callout[0].heading.value.document.children[0].children[0].value}</h2>
-					<p>{block.callout[0].content.value.document.children[0].children[0].value}</p>
-					<iframe src={block.videoUrl} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-				</div>
+					<VideoHero
+						videoUrl={block.videoUrl}
+						heading={block.callout[0].heading.value.document.children[0].children[0].value}
+						content={block.callout[0].content.value.document.children[0].children[0].value}
+					/>
 				);
 			case 'block_text_and_image':
 				return null;
 			case 'block_selected_articles_hero':
 				return (
-				<div class="selected-articles-hero">
-					{block.articles.map(article => (
-					<div class="article-card">
-						<img src={article.featuredImage.responsiveImage.src} alt={article.featuredImage.responsiveImage.alt} />
-						<h5>{article.title}</h5>
-						<p>{article.seo.description}</p>
-						<a href={`/blog/${article.slug}`}>Read more</a>
+					<div class="selected-articles-hero">
+						{block.articles.map(article => (
+						<div class="article-card">
+							<Image data={article.featuredImage} />
+							<Heading level="h5">{article.title}</Heading>
+							<p>{article.seo.description}</p>
+							<a href={`/blog/${article.slug}`}>Read more</a>
+						</div>
+						))}
 					</div>
-					))}
-				</div>
 				);
 			default:
 				return <StructuredText data={block.content.value} />;
 			}
 		})}
-		</section>
+	</section>
 </BaseLayout>
 <style>
 	.page-content {
