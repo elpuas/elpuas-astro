@@ -4,13 +4,6 @@
 npm i && npm run dev
 ```
 
-Features:
-
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-
 ## 🚀 Project Structure
 
 Inside of this Astro project, you'll see the following folders and files:
