@@ -6,20 +6,76 @@ import Heading from '../components/Heading.astro'
 	<div class="spacer"></div>
 	<Heading level="h1">Let's Talk</Heading>
 	<Heading level="h5">If you’d like to know more about my work or process feel free to get in touch.</Heading>
-	<form name="contact" netlify></form>
-		<input type="hidden" name="form-name" value="contact" />
-		<div class="form-group">
-			<label for="name">Name</label>
-			<input type="text" id="name" name="name" required />
-		</div>
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="email" id="email" name="email" required />
-		</div>
-		<div class="form-group">
-			<label for="message">Message</label>
-			<textarea id="message" name="message" required></textarea>
-		</div>
-		<button type="submit">Send</button>
-	</form>
+	<section class="page-content">
+		<form 
+			name="contact"
+			action="/pages/success" 
+			method="POST" 
+			data-netlify="true"
+		>
+			<input type="hidden" name="form-name" value="contact" />
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" required aria-required="true" />
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" required aria-required="true" />
+			</div>
+			<div class="form-group">
+				<label for="message">Message</label>
+				<textarea id="message" name="message" required aria-required="true"></textarea>
+			</div>
+			<button type="submit" aria-label="Send your message">Send</button>
+		</form>
+	</section>
 </BaseLayout>
+<style>
+.page-content {
+	margin-top: var(--elpuas-preset-space-xxxl);
+	form {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 1rem;
+
+			label {
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
+
+			input,
+			textarea {
+				padding: 0.5rem;
+				border: 1px solid #ccc;
+				border-radius: 0.25rem;
+			}
+		}
+
+		button {
+				background-color: var(--elpuas-preset-color-tertiary);
+				border-radius: 9999px;
+				border: none;
+				color: var(--elpuas-preset-color-primary);
+				display: inline-block;
+				font-weight: var(--elpuas-preset-fontweight-semibold);
+				max-width: fit-content;
+				padding: 1.5rem 2.5rem;
+				text-decoration: none;
+				text-transform: uppercase;
+				transition-duration: .15s;
+				transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+				transition-timing-function: cubic-bezier(.4,0,.2,1);
+
+				&:hover {
+					background-color: var(--elpuas-preset-color-secondary);
+					color: var(--elpuas-preset-color-tertiary);
+				}
+			}
+	}
+}
+</style>

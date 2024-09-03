@@ -99,6 +99,20 @@ hr {
 	border: none;
 }
 
+p a,
+a {
+	color: var(--elpuas-preset-color-tertiary);
+	text-decoration-color: var(--elpuas-preset-color-secondary);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 2px;
+	font-weight: bold;
+
+	&:hover {
+		color: var(--elpuas-preset-color-secondary);
+		text-decoration-color: var(--elpuas-preset-color-tertiary);
+	}
+}
+
 /* Utilities */
 
 .sr-only {
