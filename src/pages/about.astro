@@ -1,60 +1,77 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Heading from '../components/Heading.astro';
+import { ABOUT_QUERY } from '../queries/page-about';
+import { fetchGraphQL } from '../utils/fetch-graphql';
+import { StructuredText } from '@datocms/astro/StructuredText';
+import Gallery from '../components/Gallery.astro';
+import { Image } from '@datocms/astro/Image';
+import VideoHero from '../components/VideoHero.astro';
+
+const response = await fetchGraphQL(ABOUT_QUERY);
+
+if (!response || !response.page) {
+	throw new Error('Failed to fetch page data or no page data returned');
+}
+
+const page = response.page;
+
+// Extracting metadata from _seoMetaTags
+const seoMetaTags = page._seoMetaTags;
+const titleTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:title' || tag.attributes?.name === 'twitter:title');
+const descriptionTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:description' || tag.attributes?.name === 'twitter:description');
+const imageTag = seoMetaTags?.find(tag => tag.attributes?.property === 'og:image' || tag.attributes?.name === 'twitter:image');
+
+const metaTitle = titleTag ? titleTag.attributes.content : page.title;
+const metaDescription = descriptionTag ? descriptionTag.attributes.content : 'I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community.';
+const metaImage = imageTag ? imageTag.attributes.content : null;
 ---
-
-<BaseLayout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
-
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
-
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
-
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+<BaseLayout title={metaTitle} description={metaDescription} image={metaImage}>
+	<div class="spacer"></div>
+	<Heading level="h1">About Me</Heading>
+	<Heading level="h5" className='excerpt'>I’m passionate about helping people create and build great digital products. I’ve been designing and developing software for fifteen years, and I’m a big supporter of the startup and tech community.</Heading>
+	<section class="page-content">
+		{page.content.map(block => {
+			switch (block._modelApiKey) {
+			case 'block_paragraph':
+				return <StructuredText data={block.content.value} />;
+			case 'block_image':
+				return <Image data={block.image.responsiveImage} />;
+			case 'block_gallery':
+				return <Gallery images={block.images} />;
+			case 'block_video_hero':
+				return (
+					<VideoHero
+						videoUrl={block.videoUrl}
+						heading={block.callout[0].heading.value.document.children[0].children[0].value}
+						content={block.callout[0].content.value.document.children[0].children[0].value}
+					/>
+				);
+			case 'block_text_and_image':
+				return null;
+			case 'block_selected_articles_hero':
+				return (
+					<div class="selected-articles-hero">
+						{block.articles.map(article => (
+						<div class="article-card">
+							<Image data={article.featuredImage} />
+							<Heading level="h5">{article.title}</Heading>
+							<p>{article.seo.description}</p>
+							<a href={`/blog/${article.slug}`}>Read more</a>
+						</div>
+						))}
+					</div>
+				);
+			default:
+				return <StructuredText data={block.content.value} />;
+			}
+		})}
+	</section>
 </BaseLayout>
+<style>
+	.page-content {
+		container-type: inline-size;
+		margin-top: var(--elpuas-preset-space-xl);
+	}
+</style>
+

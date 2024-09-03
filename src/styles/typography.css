@@ -107,3 +107,7 @@ p, a, li, span, strong, em, input, textarea, select {
     line-height: 1.6;
     margin: 0;
 }
+
+p {
+    margin-bottom: var(--elpuas-preset-margin-xl);
+}

@@ -8,7 +8,7 @@ const { posts } = Astro.props;
 ---
 
 <section class="recent-posts">
-    <Heading level='h2'>Recent Posts</Heading>
+    <Heading level='h2' className='h4'>Recent Posts</Heading>
     <div class="posts-container">
         {posts.map((post) => (
             <Card

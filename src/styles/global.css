@@ -81,6 +81,8 @@ img {
 code {
 	padding: var(--elpuas-preset-padding-xxs) var(--elpuas-preset-padding-xs);
 	border-radius: 2px;
+	color: var(--elpuas-preset-color-black);
+	background-color: var(--elpuas-preset-color-secondary);
 }
 pre {
 	padding: 1.5em;
@@ -95,6 +97,20 @@ blockquote {
 
 hr {
 	border: none;
+}
+
+p a,
+a {
+	color: var(--elpuas-preset-color-tertiary);
+	text-decoration-color: var(--elpuas-preset-color-secondary);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 2px;
+	font-weight: bold;
+
+	&:hover {
+		color: var(--elpuas-preset-color-secondary);
+		text-decoration-color: var(--elpuas-preset-color-tertiary);
+	}
 }
 
 /* Utilities */
@@ -140,4 +156,9 @@ hr {
 
 body:has(.hamburger.active) {
 	overflow: hidden;
+}
+
+.spacer {
+	display: block;
+	margin-top: var(--elpuas-preset-margin-xxxl-large);
 }
