@@ -45,3 +45,5 @@ Check out [Astro documentation](https://docs.astro.build) or jump into the [Disc
 ## Credit
 
 This theme is based off of the lovely [ElPuas Blog](https://github.com/elpuas/catalina).
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8fc29969-1705-49e5-a751-f641d646d839/deploy-status)](https://app.netlify.com/sites/elpuas/deploys)
