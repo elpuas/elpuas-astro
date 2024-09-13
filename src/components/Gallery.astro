@@ -1,15 +1,29 @@
 ---
 import { Image } from '@datocms/astro/Image';
+
+export interface GalleryProps {
+    images: {
+        responsiveImage: {
+            src: string;
+            alt: string;
+            width: number;
+            height: number;
+        };
+    }[];
+}
+
 const { images } = Astro.props;
 ---
 <section class="gallery">
     {images.map(image => (
         <div class="gallery-item">
             <Image data={image.responsiveImage} />
-            <span>{image.responsiveImage.alt}</span>
+            <div class="wrapper">
+                <div class="fold">{image.responsiveImage.alt}</div>
+            </div>
         </div>
     ))}
-</section>
+</section><!-- gallery -->
 
 <style>
     .gallery {
@@ -23,6 +37,17 @@ const { images } = Astro.props;
             height: 100%;
             text-align: center;
             position: relative;
+            cursor: pointer;
+            border: 1px solid var(--elpuas-preset-color-secondary);
+
+            &:hover {
+                border-radius: 4px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+                .wrapper {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
 
             img {
                 width: 100%;
@@ -32,19 +57,57 @@ const { images } = Astro.props;
                 min-height: 384px;
             }
 
-            span {
+            .wrapper {
                 display: block;
                 position: absolute;
-                width: max-content;
+                width: 60%;
                 bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
+                left: 0;
                 opacity: 1;
                 margin-top: var(--elpuas-preset-space-xs);
                 padding: var(--elpuas-preset-space-xs) var(--elpuas-preset-space-sm);
-                font-size: var(--elpuas-preset-fontsize-base);
-                color: var(--elpuas-preset-color-tertiary);
-                background-color: var(--elpuas-preset-color-primary);
+                font-size: 14px;
+                color: var(--elpuas-preset-color-black);
+                background-color: transparent;
+                text-align: left;
+                transform: translateY(100%);
+                opacity: 0;
+                transition: all 0.5s ease-in-out;
+
+                .fold {
+                    background:
+                    -webkit-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
+                    -webkit-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -webkit-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -webkit-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
+                    background:
+                    -moz-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
+                    -moz-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -moz-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -moz-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
+                    background:
+                    -o-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
+                    -o-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -o-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    -o-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
+                    background:
+                    linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
+                    linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
+                    linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
+
+                    width: 60%;
+                    margin: 0;
+                    padding: var(--elpuas-preset-space-lg);
+                }
+                /* folding */
+                .fold {
+                    -webkit-background-size: 35px 35px, 0 0, 0 0, 100% 100%;
+                    -moz-background-size: 35px 35px, 0 0, 0 0, 100% 100%;
+                    background-size: 35px 35px, 0 0, 0 0, 100% 100%;
+                    background-position: 100% 0, 0 0, 100% 100%, 100% 0;
+                    background-repeat: no-repeat;
+                }
             }
         }
     }  

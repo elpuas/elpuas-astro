@@ -1,6 +1,12 @@
 ---
 import Heading from "./Heading.astro";
 
+export interface Props {
+    heading: string;
+    content: string;
+    videoUrl: string;
+}
+
 const { heading, content, videoUrl } = Astro.props;
 ---
 
@@ -62,7 +68,7 @@ const { heading, content, videoUrl } = Astro.props;
             box-shadow: inset 0 0 0 1px var(--elpuas-preset-color-tertiary);
         }
 
-        @container (max-width: 900px) {
+        @container (min-width: 900px) {
             .text-content {
                 max-width: 50%;
             }

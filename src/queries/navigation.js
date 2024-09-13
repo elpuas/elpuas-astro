@@ -1,4 +1,6 @@
-// Define your GraphQL queries as constants
+/**
+ * Query to fetch the navigation menu.
+ */
 export const NAVIGATION_QUERY = `
     query Navigation {
         navigation {
