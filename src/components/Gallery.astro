@@ -1,5 +1,17 @@
 ---
 import { Image } from '@datocms/astro/Image';
+
+export interface GalleryProps {
+    images: {
+        responsiveImage: {
+            src: string;
+            alt: string;
+            width: number;
+            height: number;
+        };
+    }[];
+}
+
 const { images } = Astro.props;
 ---
 <section class="gallery">

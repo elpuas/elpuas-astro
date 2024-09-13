@@ -1,3 +1,6 @@
+/**
+ * Query to fetch the what-i-do page content.
+ */
 export const WHAT_QUERY = `
     query WhatPage {
         page(filter: {slug: {eq: "what-i-do"}}) {

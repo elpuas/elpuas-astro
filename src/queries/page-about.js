@@ -1,3 +1,6 @@
+/**
+ * Query to fetch the about page content.
+ */
 export const ABOUT_QUERY = `
     query AboutPage {
         page(filter: {slug: {eq: "about"}}) {

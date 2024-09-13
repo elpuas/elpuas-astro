@@ -3,6 +3,22 @@
 import Card from './Card.astro';
 import Heading from './Heading.astro';
 
+export interface Props {
+    posts: {
+        title: string;
+        slug: string;
+        featuredImage: {
+            responsiveImage: {
+                src: string;
+                width: number;
+                height: number;
+            };
+        };
+        categories: { title: string }[];
+    }[];
+}
+
+
 const { posts } = Astro.props;
 
 ---

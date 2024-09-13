@@ -1,3 +1,6 @@
+/**
+ * Query to fetch the front page content.
+ */
 export const FRONTPAGE_QUERY = `
     query Homepage {
         frontPage {

@@ -1,3 +1,6 @@
+/**
+ * Query to fetch all articles.
+ */
 export const ARTICLES_QUERY = `
     query AllArticles {
         allArticles {
