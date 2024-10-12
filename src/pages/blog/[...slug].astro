@@ -5,6 +5,18 @@ import { ARTICLES_QUERY } from '../../queries/articles';
 import HeroSection from '../../components/HeroSection.astro';
 import { StructuredText } from '@datocms/astro/StructuredText';
 import RecentPosts from '../../components/RecentPosts.astro';
+import Heading from '../../components/Heading.astro';
+import { Image } from '@datocms/astro/Image';
+import {
+  FacebookShareButton,
+  LinkedInShareButton,
+  RedditShareButton,
+  TwitterShareButton,
+  SocialShare
+} from "astro-social-share";
+
+
+const BUTTONS = [TwitterShareButton, FacebookShareButton, LinkedInShareButton, RedditShareButton]
 
 
 export async function getStaticPaths() {
@@ -105,6 +117,8 @@ const relatedPosts = response.allArticles.filter(
         switch (block._modelApiKey) {
           case 'block_paragraph':
               return <StructuredText data={block.content.value} />;
+          case 'block_image':
+              return <Image data={block.image.responsiveImage} />;
           case 'block_code':
               return <StructuredText data={block.code} />;
           default:
@@ -112,6 +126,23 @@ const relatedPosts = response.allArticles.filter(
         } 
       }) 
     }
+    <div class="give-and-share">
+      <Heading level='h5'>Give and Share</Heading>
+      <p>Enjoyed this article? Share it with your friends and colleagues!</p>
+      <SocialShare
+          buttons={BUTTONS}
+          description={metaDescription}
+          title={metaTitle}
+      />
+    </div>
+    <div class="buy-me-a-coffee">
+        <Heading level='h5'>Buy Me a Coffee</Heading>
+        <p>If you found this article helpful, consider buying me a coffee!</p>
+        <a href="https://buymeacoffee.com/elpuas" target="_blank" rel="noopener noreferrer">
+          <img src="/bmc-button-640x180.png" alt="Buy Me a Coffee" width='100' height='100' class="buy-me-a-coffee" />
+        </a>
+    </div>
+    <div class="spacer"></div>
     <RecentPosts posts={relatedPosts} />
 	</article>
 </BaseLayout>
@@ -124,6 +155,22 @@ article {
 
   h2 strong {
     font-size: var(--elpuas-preset-fontsize-h3);
+  }
+
+  .give-and-share {
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    .astro-social-share {
+      .social-share-btn {
+        color: var(--elpuas-preset-color-tertiary);
+
+        svg {
+          fill: var(--elpuas-preset-color-tertiary);
+        }
+      }
+    }
   }
 }
 </style>

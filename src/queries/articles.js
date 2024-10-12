@@ -51,6 +51,14 @@ export const ARTICLES_QUERY = `
                 id
                 alignment
                 _modelApiKey
+                image {
+                responsiveImage {
+                    src
+                    alt
+                    width
+                    height
+                }
+                }
             }
             }
             articleAuthor
