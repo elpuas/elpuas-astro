@@ -27,6 +27,14 @@ export const FRONTPAGE_QUERY = `
                         heading {
                             value
                         }
+                        link {
+                            ... on ArticleRecord {
+                            slug
+                            }
+                            ... on PageRecord {
+                            slug
+                            }
+                        }
                     }
                     videoUrl
                     _modelApiKey

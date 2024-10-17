@@ -173,4 +173,16 @@ article {
     }
   }
 }
+img.buy-me-a-coffee {
+    width: 150px;
+    transition: all 0.3s ease;
+}
+
+a:has(img.buy-me-a-coffee) {
+    &:hover {
+      img.buy-me-a-coffee {
+        transform: scale(1.05);
+      }
+    }
+}
 </style>
