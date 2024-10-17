@@ -7,6 +7,7 @@ import SelectedFeaturedCards from '../components/SelectedFeaturedCards.astro';
 import { FRONTPAGE_QUERY } from '../queries/frontpage';
 import { fetchGraphQL } from '../utils/fetch-graphql';
 import VideoHero from '../components/VideoHero.astro';
+// import { Debug } from 'astro:components';
 
 const data = await fetchGraphQL(FRONTPAGE_QUERY);
 
@@ -46,6 +47,7 @@ const linkText = "Learn More";
 
 const videoHeading = videoHero.callout[0].heading.value.document.children[0].children[0].value;
 const videoContent = videoHero.callout[0].content.value.document.children[0].children[0].value;
+const videoPostUrl = videoHero.callout[0].link.slug;
 const videoUrl = videoHero.videoUrl;
 ---
 
@@ -55,6 +57,7 @@ const videoUrl = videoHero.videoUrl;
 		videoUrl={videoUrl}
 		heading={videoHeading}
 		content={videoContent}
+		postUrl={`/blog/${videoPostUrl}`}
 	/>
 	<div class="spacer"></div>
 	<SelectedFeaturedCards

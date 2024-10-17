@@ -2,7 +2,7 @@
 
 export interface Props {
     label: string;
-    href: string;
+    href?: string;
     className?: string;  // Optional className for additional styling
 }
 
@@ -32,6 +32,25 @@ const { label, href, className } = Astro.props;
         &:hover {
             background-color: var(--elpuas-preset-color-secondary);
             color: var(--elpuas-preset-color-tertiary);
+        }
+
+        &:is(.secondary) {
+            background-color: transparent;
+            color: var(--elpuas-preset-color-tertiary);
+            padding: 0;
+            padding-right: 50px;
+            margin-right: auto;
+            margin-top: 1rem;
+            text-decoration-line: underline;
+            text-decoration-thickness: 2px;
+            text-decoration-color: var(--elpuas-preset-color-tertiary);
+            transition-duration: .15s;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+
+            &:hover {
+                text-decoration-color: var(--elpuas-preset-color-secondary);
+                color: var(--elpuas-preset-color-secondary);
+            }
         }
     }
 </style>

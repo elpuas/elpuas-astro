@@ -1,19 +1,22 @@
 ---
 import Heading from "./Heading.astro";
+import Button from "./Button.astro";
 
 export interface Props {
     heading: string;
     content: string;
     videoUrl: string;
+    postUrl?: string;
 }
 
-const { heading, content, videoUrl } = Astro.props;
+const { heading, content, videoUrl, postUrl } = Astro.props;
 ---
 
 <div class="video-hero">
     <div class="text-content">
         <Heading level='h3' className="heading-video-hero">{heading}</Heading>
         <p>{content}</p>
+        <Button label="Learn More" href={postUrl} className="secondary" />
     </div>
     <div class="video-content">
         <iframe
