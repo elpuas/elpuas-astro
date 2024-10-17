@@ -50,8 +50,14 @@ const { posts } = Astro.props;
 
         .posts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
+        }
+
+        @container (min-width: 768px) {
+            .posts-container {
+                grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            }
         }
     }
 </style>
