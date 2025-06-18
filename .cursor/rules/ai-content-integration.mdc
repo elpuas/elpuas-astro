@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+title: "AI Content Integration and LLM Context"
+summary: "Guidelines for integrating AI-generated content, managing LLM context files, and maintaining AI-assisted features"
+---
+
+# Description
+This site integrates AI-generated content and maintains context for LLM interactions. The `llms.txt` file in the public directory provides context for AI assistants working on the project, and AI-generated features like summaries and callouts should follow established patterns.
+
+# Guidelines
+- **LLM Context File**: Maintain `/public/llms.txt` as the authoritative source of project context for AI assistants
+- **AI-Generated Summaries**: When adding AI-generated post summaries, store them in DatoCMS, not as local files
+- **Content Enhancement**: Use AI for content enhancement (meta descriptions, social share text) but store results in DatoCMS
+- **Code Generation**: AI-generated code should follow existing patterns in the codebase
+- **Documentation**: AI-generated documentation should be validated against actual implementation
+- **Static Assets**: Place AI context files and resources in `/public/` directory for universal access
+
+# Examples
+
+## LLM Context File Structure
+```text
+# Project: ElPuas.com - Astro + DatoCMS Blog
+## Architecture
+- Astro static site generator
+- DatoCMS headless CMS
+- All content via GraphQL API
+- No local markdown files
+
+## Key Patterns
+[Technical documentation for AI context]
+```
+
+## AI-Enhanced Meta Tags
+```javascript
+// When generating meta descriptions, use DatoCMS SEO fields
+const descriptionTag = seoMetaTags?.find(tag => 
+    tag.attributes?.property === 'og:description'
+);
+const metaDescription = descriptionTag ? 
+    descriptionTag.attributes.content : 
+    'AI-generated fallback description';
+```
+
+## Social Share Integration
+```astro
+---
+// AI can enhance social sharing text while respecting DatoCMS structure
+const socialShareData = {
+    title: metaTitle,
+    description: metaDescription, // From DatoCMS or AI-enhanced
+    url: Astro.url.href
+};
+---
+<SocialShare
+    buttons={BUTTONS}
+    description={socialShareData.description}
+    title={socialShareData.title}
+/>
+```
+
+# Related
+- `/public/llms.txt` - LLM context and project documentation
+- Social sharing components with AI-enhanced descriptions
+- DatoCMS SEO field management
+- AI-assisted content creation workflows

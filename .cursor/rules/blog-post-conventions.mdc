@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+title: "Blog Post Structure and Conventions"
+summary: "Standards for blog post rendering, metadata handling, SEO, and URL structure from DatoCMS articles"
+---
+
+# Description
+Blog posts are dynamically generated from DatoCMS Article records using Astro's static site generation. Each article has a unique slug, structured content blocks, and SEO metadata that must be properly handled during rendering.
+
+# Guidelines
+- **Slug Generation**: Article slugs are managed in DatoCMS and used for URL routing via `[...slug].astro`
+- **SEO Metadata**: Extract and use DatoCMS `_seoMetaTags` for proper meta tags with fallbacks
+- **Content Blocks**: Render content using the block-based system, not as raw HTML
+- **Featured Images**: Always use DatoCMS responsive images via `@datocms/astro/Image`
+- **Related Posts**: Calculate related posts based on shared categories, limit to 2 posts
+- **Date Formatting**: Convert DatoCMS date format (YYYY-MM-DD) to MM/DD/YYYY for display
+- **Author Attribution**: Include `articleAuthor` and `articleDisplayDate` in hero sections
+
+# Examples
+
+## Static Path Generation
+```javascript
+export async function getStaticPaths() {
+    const response = await fetch('https://graphql.datocms.com/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+        },
+        body: JSON.stringify({
+            query: `query MyQuery { allArticles { slug } }`
+        }),
+    });
+    
+    const parsedResponse = await response.json();
+    return parsedResponse.data.allArticles.map(article => ({
+        params: { slug: article.slug },
+    }));
+}
+```
+
+## SEO Metadata Extraction
+```javascript
+const seoMetaTags = post._seoMetaTags;
+const titleTag = seoMetaTags?.find(tag => 
+    tag.attributes?.property === 'og:title' || 
+    tag.attributes?.name === 'twitter:title'
+);
+const metaTitle = titleTag ? titleTag.attributes.content : post.title;
+```
+
+## Date Formatting
+```javascript
+function formatDate(dateString) {
+    const [year, month, day] = dateString.split('-');
+    return `${month}/${day}/${year}`;
+}
+```
+
+# Related
+- `/src/pages/blog/[...slug].astro` - Main blog post template
+- `/src/queries/articles.js` - Article data structure
+- DatoCMS Article model with required fields: slug, title, content, _seoMetaTags

@@ -1,0 +1,74 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+title: "Component Integration with DatoCMS"
+summary: "Patterns for integrating Astro components with DatoCMS structured content and responsive data"
+---
+
+# Description
+Astro components in this project are designed to work seamlessly with DatoCMS data structures. Components receive DatoCMS data as props and handle responsive images, structured text, and block-based content rendering.
+
+# Guidelines
+- **Responsive Images**: Always use `@datocms/astro/Image` for DatoCMS images, never raw img tags
+- **Structured Text**: Use `@datocms/astro/StructuredText` for rich text content from DatoCMS
+- **Hero Components**: Accept DatoCMS callout data with heading, content, and link objects
+- **Block Components**: Create reusable components that match DatoCMS block model API keys
+- **Data Transformation**: Transform DatoCMS data structure in the page component before passing to child components
+- **Prop Types**: Structure component props to match expected DatoCMS field structures
+
+# Examples
+
+## Hero Component Integration
+```astro
+---
+// In page component
+const heroData = {
+    title: hero.heading.value,
+    subtitle: hero.eyebrow,
+    ctaText: 'Learn More',
+    ctaLink: `/${hero.link.slug}`,
+    heroAlign: hero.heroAlign,
+};
+---
+<Hero heroData={heroData} className={hero?.heroAlign} />
+```
+
+## Image Component Usage
+```astro
+---
+import { Image } from '@datocms/astro/Image';
+---
+<Image data={block.image.responsiveImage} />
+```
+
+## Structured Text Rendering
+```astro
+---
+import { StructuredText } from '@datocms/astro/StructuredText';
+---
+<StructuredText data={block.content.value} />
+```
+
+## Video Hero with DatoCMS Data
+```astro
+---
+const videoHeading = videoHero.callout[0].heading.value.document.children[0].children[0].value;
+const videoContent = videoHero.callout[0].content.value.document.children[0].children[0].value;
+const videoPostUrl = videoHero.callout[0].link.slug;
+---
+<VideoHero 
+    videoUrl={videoHero.videoUrl}
+    heading={videoHeading}
+    content={videoContent}
+    postUrl={`/blog/${videoPostUrl}`}
+/>
+```
+
+# Related
+- `/src/components/` - All Astro components
+- `/src/pages/index.astro` - Homepage component integration examples
+- DatoCMS responsive image documentation
+- `@datocms/astro` package components
