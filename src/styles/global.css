@@ -7,6 +7,13 @@
     --elpuas-preset-fontsize-h5: 24px;
     --elpuas-preset-fontsize-base: 18px;
 
+	/* Font weights */
+	--elpuas-preset-fontweight-regular: 400;
+	--elpuas-preset-fontweight-medium: 500;
+	--elpuas-preset-fontweight-semibold: 600;
+	--elpuas-preset-fontweight-bold: 700;
+	--elpuas-preset-fontweight-black: 900;
+
 	/* Colors */
     --elpuas-preset-color-primary: #D8FF00;
     --elpuas-preset-color-secondary: #B6D600;
@@ -47,7 +54,7 @@
 	--elpuas-preset-padding-xxxxl-large: var(--elpuas-preset-space-xxxxl-large);
 
 	/* Box Shadow */
-	--elpuas-preset-box-shadow: 0 2px 6px rgba(var51, 51, 51, 25%), 0 8px 24px rgba(var51, 51, 51, 33%), 0 16px 32px rgba(var51, 51, 51, 33%);
+	--elpuas-preset-box-shadow: 0 2px 6px rgba(51, 51, 51, 0.25), 0 8px 24px rgba(51, 51, 51, 0.33), 0 16px 32px rgba(51, 51, 51, 0.33);
 
 	--elpuas-preset-content-width: 1240px;
 }

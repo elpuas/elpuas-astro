@@ -7,7 +7,6 @@ import SelectedFeaturedCards from '../components/SelectedFeaturedCards.astro';
 import { FRONTPAGE_QUERY } from '../queries/frontpage';
 import { fetchGraphQL } from '../utils/fetch-graphql';
 import VideoHero from '../components/VideoHero.astro';
-// import { Debug } from 'astro:components';
 
 const data = await fetchGraphQL(FRONTPAGE_QUERY);
 

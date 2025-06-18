@@ -2,34 +2,34 @@
 
 ## HIGH Priority
 
-- [ ] **Conflicting Content Architecture - Local Markdown Files vs DatoCMS**  
+- [x] **Conflicting Content Architecture - Local Markdown Files vs DatoCMS**  
   **Location:** `/src/content/blog/` directory  
   **Why it matters:** The project claims to use DatoCMS exclusively for content, but contains 5 local markdown files that contradict this architecture  
   **Suggested fix:** Remove all markdown files in `/src/content/blog/` and the unused content collection configuration
 
-- [ ] **Missing llms.txt File Location**  
+- [x] **Missing llms.txt File Location**  
   **Location:** `/public/llms.txt` (expected) vs `/llms.txt` (actual)  
   **Why it matters:** The AI integration rule states llms.txt should be in `/public/` but it's in the root, making it inaccessible via web  
   **Suggested fix:** Move `llms.txt` to `/public/llms.txt` to make it web-accessible and consistent with documentation
 
-- [ ] **Broken Blog Index Accessibility**  
+- [x] **Broken Blog Index Accessibility**  
   **Location:** `/src/pages/blog/index.astro`, lines 21-33  
   **Why it matters:** ARIA attributes reference non-existent IDs (`aria-labelledby="blog-list"`, `aria-controls="post-content-${post.slug}"`)  
   **Suggested fix:** Add proper heading with `id="blog-list"` or remove invalid ARIA references
 
-- [ ] **CSS Syntax Error in Global Styles**  
+- [x] **CSS Syntax Error in Global Styles**  
   **Location:** `/src/styles/global.css`, line 43  
   **Why it matters:** Invalid CSS property syntax `--elpuas-preset-box-shadow: 0 2px 6px rgba(var51, 51, 51, 25%)` will break styling  
   **Suggested fix:** Fix rgba values to proper format: `rgba(51, 51, 51, 0.25)`
 
 ## MEDIUM Priority
 
-- [ ] **Unused Content Configuration**  
+- [x] **Unused Content Configuration**  
   **Location:** `/src/content/config.ts`  
   **Why it matters:** Defines blog collection schema but no content is processed through Astro's content collections  
   **Suggested fix:** Remove content configuration file since all content comes from DatoCMS
 
-- [ ] **Debug Import Comments Left in Production Code**  
+- [x] **Debug Import Comments Left in Production Code**  
   **Location:** `/src/pages/index.astro` line 9, `/src/pages/what-i-do.astro` line 10  
   **Why it matters:** Commented debug imports indicate incomplete cleanup and add unnecessary code noise  
   **Suggested fix:** Remove all commented debug import statements
@@ -49,14 +49,14 @@
   **Why it matters:** Same fallback description used on multiple pages hurts SEO and user experience  
   **Suggested fix:** Create unique, page-specific fallback descriptions
 
-- [ ] **Missing Font Weight CSS Variables**  
+- [x] **Missing Font Weight CSS Variables**  
   **Location:** `/src/styles/global.css`  
   **Why it matters:** Code references `--elpuas-preset-fontweight-*` variables that aren't defined  
   **Suggested fix:** Add missing font weight CSS custom properties
 
 ## LOW Priority
 
-- [ ] **Success Page Title Inconsistency**  
+- [x] **Success Page Title Inconsistency**  
   **Location:** `/src/pages/success.astro` line 6  
   **Why it matters:** Uses "Let's Talk" title instead of success-specific title  
   **Suggested fix:** Change title to "Message Sent Successfully" or similar
