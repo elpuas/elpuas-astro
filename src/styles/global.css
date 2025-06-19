@@ -21,6 +21,9 @@
     --elpuas-preset-color-white: #FFF;
     --elpuas-preset-color-black: #333;
 
+	/* Accessibility */
+	--elpuas-accent: var(--elpuas-preset-color-secondary);
+
 	/* Base spacing unit */
 	--elpuas-preset-space-xxs: 4px;
 	--elpuas-preset-space-xs: 8px;
@@ -57,6 +60,18 @@
 	--elpuas-preset-box-shadow: 0 2px 6px rgba(51, 51, 51, 0.25), 0 8px 24px rgba(51, 51, 51, 0.33), 0 16px 32px rgba(51, 51, 51, 0.33);
 
 	--elpuas-preset-content-width: 1240px;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus {
+	outline: none;
+}
+
+:focus-visible {
+	outline: 2px solid var(--elpuas-accent, #0077ff);
+	outline-offset: 2px;
+	border-radius: 4px;
+	transition: outline 0.2s ease;
 }
 
 body {

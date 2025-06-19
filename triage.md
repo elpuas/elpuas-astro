@@ -34,12 +34,12 @@
   **Why it matters:** Commented debug imports indicate incomplete cleanup and add unnecessary code noise  
   **Suggested fix:** Remove all commented debug import statements
 
-- [ ] **Missing Focus Styles for Keyboard Accessibility**  
+- [x] **Missing Focus Styles for Keyboard Accessibility**  
   **Location:** Throughout CSS files  
   **Why it matters:** No focus-visible styles found, making keyboard navigation difficult for accessibility  
   **Suggested fix:** Add focus-visible styles for all interactive elements
 
-- [ ] **Inconsistent Image Alt Text Implementation**  
+- [x] **Inconsistent Image Alt Text Implementation**  
   **Location:** DatoCMS Image components vs `/src/pages/blog/[...slug].astro` line 141  
   **Why it matters:** DatoCMS images have alt text, but hardcoded "Buy Me a Coffee" image may not be descriptive enough  
   **Suggested fix:** Review and improve alt text for better accessibility
