@@ -63,7 +63,7 @@
 }
 
 /* Focus styles for keyboard accessibility */
-:focus {
+:focus:not(:focus-visible) {
 	outline: none;
 }
 
