@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+title: "DatoCMS Content Structure and Integration"
+summary: "Guidelines for working with DatoCMS content models, GraphQL queries, and data fetching patterns in this Astro site"
+---
+
+# Description
+This Astro site uses DatoCMS as a headless CMS for all content management. All blog posts, pages, and dynamic content come from DatoCMS via GraphQL API calls, not from local markdown files. The site fetches content at build time using structured GraphQL queries.
+
+# Guidelines
+- **Never create local markdown files** - all content is managed in DatoCMS
+- Use the `fetchGraphQL()` utility function from `/src/utils/fetch-graphql.js` for all API calls
+- Store all GraphQL queries in `/src/queries/` directory as JavaScript files with named exports
+- Content models in DatoCMS use block-based structured content with specific model API keys:
+  - `block_paragraph` - Text content with structured text formatting
+  - `block_image` - Images with responsive image data
+  - `block_code` - Code blocks with syntax highlighting
+  - `block_gallery` - Image galleries with configurable styles
+  - `block_video_hero` - Video hero sections
+  - `block_selected_articles_hero` - Featured article sections
+
+# Examples
+
+## GraphQL Query Structure
+```javascript
+export const ARTICLES_QUERY = `
+    query AllArticles {
+        allArticles {
+            slug
+            title
+            content {
+                ... on BlockParagraphRecord {
+                    _modelApiKey
+                    content { value }
+                }
+                ... on BlockImageRecord {
+                    _modelApiKey
+                    image { responsiveImage { src alt width height } }
+                }
+            }
+        }
+    }
+`;
+```
+
+## Content Rendering Pattern
+```javascript
+post.content.map((block) => {
+    switch (block._modelApiKey) {
+        case 'block_paragraph':
+            return <StructuredText data={block.content.value} />;
+        case 'block_image':
+            return <Image data={block.image.responsiveImage} />;
+        default:
+            return null;
+    }
+})
+```
+
+# Related
+- `/src/utils/fetch-graphql.js` - GraphQL fetching utility
+- `/src/queries/` - All GraphQL query definitions
+- `/src/pages/blog/[...slug].astro` - Blog post rendering
+- DatoCMS content models: Article, Page, FrontPage

@@ -1,0 +1,46 @@
+# ElPuas Digital Crafts – Alfredo Navas
+
+> Web Artisan from Costa Rica with over 15 years of experience building accessible, modern websites using WordPress, React, Astro, and AI-assisted workflows. Speaker, mentor, and contributor to the open-source and WordPress community.
+
+## About
+- https://elpuas.com/about  
+  My professional journey from design and illustration to frontend and full-stack development. Focus on accessibility, performance, and community leadership.
+
+## What I Do
+- https://elpuas.com/what-i-do  
+  Overview of the technologies, services, and types of projects I work on: custom WordPress development, headless builds, block development, and agency collaboration.
+
+## Blog — Selected Articles
+- https://elpuas.com/blog/how-i-rebuilt-a-multilingual-website-in-one-week-using-ai-cursor-and-vibe-coding  
+  Rebuilding a full multilingual site in one week using Astro, ChatGPT, Claude, and Cursor.
+
+- https://elpuas.com/blog/taking-playground-further-meet-blueprints  
+  A practical introduction to WordPress Playground + Blueprints for no-install local testing and demos.
+
+- https://elpuas.com/blog/you-might-not-need-a-custom-block-the-block-bindings-api  
+  Using the Block Bindings API to make WordPress blocks dynamic without custom block code.
+
+- https://elpuas.com/blog/you-might-not-need-a-custom-block-the-block-styles-api  
+  Leveraging the Block Styles API to enhance existing blocks with new UI options using CSS.
+
+- https://elpuas.com/blog/developing-a-theme-json-generator-with-chatgpt  
+  Creating a theme.json generator tool with help from ChatGPT — process and results.
+
+- https://elpuas.com/blog/how-ai-makes-me-more-productive  
+  Reflections on how tools like ChatGPT and GitHub Copilot have improved my daily dev and writing flow.
+
+## Let’s Talk
+- https://elpuas.com/lets-talk  
+  Contact form for collaborations, freelance inquiries, mentorship or agency partnerships.
+
+## Core Skills & Topics
+WordPress Blocks, ACF, WP-CLI, React, Gutenberg, Interactivity API, REST API, Astro, AI-assisted dev, Vanilla CSS, Accessibility (WCAG), Semantic HTML, Dev Workflows.
+
+## Tools & Stack
+- WordPress (PHP 8+, custom themes/plugins, CPTs, taxonomies)  
+- React + JSX (Gutenberg blocks, modals, UI components)  
+- Astro (Markdown, MDX, islands architecture)  
+- Tailwind CSS, PostCSS, CSS Grid  
+- WP REST API, WPGraphQL  
+- Git, GitHub Actions, DDEV, VS Code, Figma  
+- AI tools: ChatGPT, Claude, Cursor

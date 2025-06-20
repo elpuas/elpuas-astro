@@ -17,21 +17,23 @@ function getExcerpt(seoMetaTags) {
 
 <BaseLayout>
 	<div class="spacer"></div>
-	<Heading level="h1">Blog.</Heading>
+	<Heading level="h1" id="blog-list">Blog.</Heading>
 	<Heading level="h5">Welcome to my blog. Explore my experiences as a developer—solving problems, facing challenges, and sharing what I’ve learned along the way.</Heading>
 	<ul class="posts-wrapper" role="list" aria-labelledby="blog-list">
 		{response.allArticles.map(post => (
 			<li class="the-post">
-				<ul class="post-categories" role="list" aria-labelledby={`post-title-${post.slug}`}>
-					{post.categories.map(category => (
-						<li>{category.title}</li>
-					))}
-				</ul>
-				<a href={`/blog/${post.slug}`} aria-controls={`post-content-${post.slug}`}>
-					<Heading className={`post-title-${post.slug}`} level='h5'>{post.title}</Heading>
-				</a>
-				<p>{getExcerpt(post._seoMetaTags)}</p>
-				<a href={`/blog/${post.slug}`} class="read-more" aria-label="read-more">Tell me more</a>
+				<article>
+					<ul class="post-categories" role="list">
+						{post.categories.map(category => (
+							<li>{category.title}</li>
+						))}
+					</ul>
+					<a href={`/blog/${post.slug}`}>
+						<Heading id={`post-title-${post.slug}`} level='h5'>{post.title}</Heading>
+					</a>
+					<p>{getExcerpt(post._seoMetaTags)}</p>
+					<a href={`/blog/${post.slug}`} class="read-more" aria-label={`Read more about ${post.title}`}>Tell me more</a>
+				</article>
 			</li>
 		))}
 	</ul>

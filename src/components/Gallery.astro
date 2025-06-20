@@ -76,37 +76,16 @@ const { images } = Astro.props;
 
                 .fold {
                     background:
-                    -webkit-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
-                    -webkit-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -webkit-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -webkit-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
-                    background:
-                    -moz-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
-                    -moz-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -moz-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -moz-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
-                    background:
-                    -o-linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
-                    -o-linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -o-linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
-                    -o-linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
-                    background:
                     linear-gradient(225deg, transparent 50%, var(--elpuas-preset-color-secondary) 50%),
                     linear-gradient(45deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
                     linear-gradient(135deg, var(--elpuas-preset-color-primary), var(--elpuas-preset-color-primary)),
                     linear-gradient(225deg, transparent 25px, var(--elpuas-preset-color-primary) 10px);
-
-                    width: 60%;
-                    margin: 0;
-                    padding: var(--elpuas-preset-space-lg);
-                }
-                /* folding */
-                .fold {
-                    -webkit-background-size: 35px 35px, 0 0, 0 0, 100% 100%;
-                    -moz-background-size: 35px 35px, 0 0, 0 0, 100% 100%;
                     background-size: 35px 35px, 0 0, 0 0, 100% 100%;
                     background-position: 100% 0, 0 0, 100% 100%, 100% 0;
                     background-repeat: no-repeat;
+                    width: 60%;
+                    margin: 0;
+                    padding: var(--elpuas-preset-space-lg);
                 }
             }
         }

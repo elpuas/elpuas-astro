@@ -2,21 +2,22 @@
 export interface Props {
     level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | string;
     className?: string;
+    id?: string;
 }
 
-const { level = 'h1', className } = Astro.props;
+const { level = 'h1', className, id } = Astro.props;
 ---
 
 {level === 'h2' ? (
-    <h2 class={className}><slot /></h2>
+    <h2 class={className} id={id}><slot /></h2>
 ) : level === 'h3' ? (
-    <h3 class={className}><slot /></h3>
+    <h3 class={className} id={id}><slot /></h3>
 ) : level === 'h4' ? (
-    <h4 class={className}><slot /></h4>
+    <h4 class={className} id={id}><slot /></h4>
 ) : level === 'h5' ? (
-    <h5 class={className}><slot /></h5>
+    <h5 class={className} id={id}><slot /></h5>
 ) : level === 'h6' ? (
-    <h6 class={className}><slot /></h6>
+    <h6 class={className} id={id}><slot /></h6>
 ) : (
-    <h1 class={className}><slot /></h1>
+    <h1 class={className} id={id}><slot /></h1>
 )}

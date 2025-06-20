@@ -21,8 +21,10 @@ const { heading, content, videoUrl, postUrl } = Astro.props;
     <div class="video-content">
         <iframe
             src={videoUrl}
-            frameborder="0"
+            title="Embedded video player"
+            loading="lazy"
             allow="autoplay; encrypted-media"
+            referrerpolicy="no-referrer"
             allowfullscreen
         ></iframe>
     </div><!-- video-content -->
