@@ -22,16 +22,18 @@ function getExcerpt(seoMetaTags) {
 	<ul class="posts-wrapper" role="list" aria-labelledby="blog-list">
 		{response.allArticles.map(post => (
 			<li class="the-post">
-				<ul class="post-categories" role="list">
-					{post.categories.map(category => (
-						<li>{category.title}</li>
-					))}
-				</ul>
-				<a href={`/blog/${post.slug}`}>
-					<Heading id={`post-title-${post.slug}`} level='h5'>{post.title}</Heading>
-				</a>
-				<p>{getExcerpt(post._seoMetaTags)}</p>
-				<a href={`/blog/${post.slug}`} class="read-more" aria-label={`Read more about ${post.title}`}>Tell me more</a>
+				<article>
+					<ul class="post-categories" role="list">
+						{post.categories.map(category => (
+							<li>{category.title}</li>
+						))}
+					</ul>
+					<a href={`/blog/${post.slug}`}>
+						<Heading id={`post-title-${post.slug}`} level='h5'>{post.title}</Heading>
+					</a>
+					<p>{getExcerpt(post._seoMetaTags)}</p>
+					<a href={`/blog/${post.slug}`} class="read-more" aria-label={`Read more about ${post.title}`}>Tell me more</a>
+				</article>
 			</li>
 		))}
 	</ul>

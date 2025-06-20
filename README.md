@@ -45,6 +45,8 @@ npm run dev
 - **Navigation**: Menu items and site structure managed in DatoCMS
 - **Media**: Images and assets stored in DatoCMS with responsive delivery
 
+> All content is now 100% managed via DatoCMS. Legacy Markdown files have been removed.
+
 ### Content Models
 - `Article` - Blog posts with structured content blocks
 - `Page` - Static pages (About, What I Do)
@@ -87,6 +89,8 @@ DATOCMS_API_KEY=your_datocms_api_token_here
 ```
 
 For production deployment, configure the same environment variable in your hosting platform.
+
+> Note: Netlify Forms may require a `data-netlify="true"` attribute and optional environment config for successful submission handling.
 
 ## 🚀 Deployment
 
